@@ -513,7 +513,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x8c ./FreeRTOS/efm32gg/croutine.o
  .debug_macro   0x00000000       0x43 ./FreeRTOS/efm32gg/croutine.o
  .debug_line    0x00000000      0x4bb ./FreeRTOS/efm32gg/croutine.o
- .debug_str     0x00000000     0x7a5c ./FreeRTOS/efm32gg/croutine.o
+ .debug_str     0x00000000     0x7a7a ./FreeRTOS/efm32gg/croutine.o
  .comment       0x00000000       0x7f ./FreeRTOS/efm32gg/croutine.o
  .ARM.attributes
                 0x00000000       0x33 ./FreeRTOS/efm32gg/croutine.o
@@ -613,7 +613,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x91 ./FreeRTOS/efm32gg/event_groups.o
  .debug_macro   0x00000000       0x19 ./FreeRTOS/efm32gg/event_groups.o
  .debug_line    0x00000000      0x70c ./FreeRTOS/efm32gg/event_groups.o
- .debug_str     0x00000000     0xb0bb ./FreeRTOS/efm32gg/event_groups.o
+ .debug_str     0x00000000     0xb0d9 ./FreeRTOS/efm32gg/event_groups.o
  .comment       0x00000000       0x7f ./FreeRTOS/efm32gg/event_groups.o
  .debug_frame   0x00000000      0x180 ./FreeRTOS/efm32gg/event_groups.o
  .ARM.attributes
@@ -1220,7 +1220,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x330 ./emlib/em_adc.o
  .debug_macro   0x00000000      0x16d ./emlib/em_adc.o
  .debug_line    0x00000000      0x940 ./emlib/em_adc.o
- .debug_str     0x00000000    0xd5606 ./emlib/em_adc.o
+ .debug_str     0x00000000    0xd5624 ./emlib/em_adc.o
  .comment       0x00000000       0x7f ./emlib/em_adc.o
  .debug_frame   0x00000000      0x110 ./emlib/em_adc.o
  .ARM.attributes
@@ -1808,7 +1808,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x69 ./emlib/em_dac.o
  .debug_macro   0x00000000      0x330 ./emlib/em_dac.o
  .debug_line    0x00000000      0x91d ./emlib/em_dac.o
- .debug_str     0x00000000    0xd47a6 ./emlib/em_dac.o
+ .debug_str     0x00000000    0xd47c4 ./emlib/em_dac.o
  .comment       0x00000000       0x7f ./emlib/em_dac.o
  .debug_frame   0x00000000      0x15c ./emlib/em_dac.o
  .ARM.attributes
@@ -2245,7 +2245,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x25 ./emlib/em_i2c.o
  .debug_macro   0x00000000       0xee ./emlib/em_i2c.o
  .debug_line    0x00000000      0xb23 ./emlib/em_i2c.o
- .debug_str     0x00000000    0xd636e ./emlib/em_i2c.o
+ .debug_str     0x00000000    0xd638c ./emlib/em_i2c.o
  .comment       0x00000000       0x7f ./emlib/em_i2c.o
  .debug_frame   0x00000000      0x1b0 ./emlib/em_i2c.o
  .ARM.attributes
@@ -2398,7 +2398,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x69 ./emlib/em_leuart.o
  .debug_macro   0x00000000      0x330 ./emlib/em_leuart.o
  .debug_line    0x00000000      0x99e ./emlib/em_leuart.o
- .debug_str     0x00000000    0xd460f ./emlib/em_leuart.o
+ .debug_str     0x00000000    0xd462d ./emlib/em_leuart.o
  .comment       0x00000000       0x7f ./emlib/em_leuart.o
  .debug_frame   0x00000000      0x21c ./emlib/em_leuart.o
  .ARM.attributes
@@ -2644,7 +2644,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x10 ./emlib/em_rtc.o
  .debug_macro   0x00000000       0x10 ./emlib/em_rtc.o
  .debug_line    0x00000000      0x8a1 ./emlib/em_rtc.o
- .debug_str     0x00000000    0xd2cf2 ./emlib/em_rtc.o
+ .debug_str     0x00000000    0xd2d10 ./emlib/em_rtc.o
  .comment       0x00000000       0x7f ./emlib/em_rtc.o
  .debug_frame   0x00000000      0x130 ./emlib/em_rtc.o
  .ARM.attributes
@@ -2926,7 +2926,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x69 ./emlib/em_usart.o
  .debug_macro   0x00000000      0x330 ./emlib/em_usart.o
  .debug_line    0x00000000      0xbd5 ./emlib/em_usart.o
- .debug_str     0x00000000    0xd5011 ./emlib/em_usart.o
+ .debug_str     0x00000000    0xd502f ./emlib/em_usart.o
  .comment       0x00000000       0x7f ./emlib/em_usart.o
  .debug_frame   0x00000000      0x380 ./emlib/em_usart.o
  .ARM.attributes
@@ -3064,7 +3064,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x63 ./emlib/em_wdog.o
  .debug_macro   0x00000000       0xba ./emlib/em_wdog.o
  .debug_line    0x00000000      0x94a ./emlib/em_wdog.o
- .debug_str     0x00000000    0xd36d6 ./emlib/em_wdog.o
+ .debug_str     0x00000000    0xd36f4 ./emlib/em_wdog.o
  .comment       0x00000000       0x7f ./emlib/em_wdog.o
  .debug_frame   0x00000000      0x120 ./emlib/em_wdog.o
  .ARM.attributes
@@ -3210,7 +3210,6 @@ Discarded input sections
  .debug_macro   0x00000000       0x11 ./src/low_power_tick_management.o
  .debug_macro   0x00000000       0xc0 ./src/low_power_tick_management.o
  .debug_macro   0x00000000       0x2d ./src/low_power_tick_management.o
- .group         0x00000000        0xc ./src/main.o
  .group         0x00000000        0xc ./src/main.o
  .group         0x00000000        0xc ./src/main.o
  .group         0x00000000        0xc ./src/main.o
@@ -4066,9 +4065,9 @@ LOAD c:/siliconlabs/simplicitystudio/v4/developer/toolchains/gnu_arm/7.2_2017q4/
                 0x20000008                SystemCoreClock
  .data.uxCriticalNesting
                 0x2000000c        0x4 ./FreeRTOS/efm32gg/port_gcc.o
- .data.parametersToTask1.7265
+ .data.parametersToTask1.7179
                 0x20000010        0x8 ./src/main.o
- .data.parametersToTask2.7266
+ .data.parametersToTask2.7180
                 0x20000018        0x8 ./src/main.o
  .data.impure_data
                 0x20000020       0x60 c:/siliconlabs/simplicitystudio/v4/developer/toolchains/gnu_arm/7.2_2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7-m\libc_nano.a(lib_a-impure.o)
@@ -4432,7 +4431,7 @@ OUTPUT(STK3700_freertos_blink_2.axf elf32-littlearm)
  .debug_ranges  0x00000968       0x50 ./src/low_power_tick_management.o
  .debug_ranges  0x000009b8       0x28 ./src/main.o
 
-.debug_macro    0x00000000    0x270f2
+.debug_macro    0x00000000    0x270a4
  .debug_macro   0x00000000      0x2fd ./BSP/bsp_stk_leds.o
  .debug_macro   0x000002fd      0xa54 ./BSP/bsp_stk_leds.o
  .debug_macro   0x00000d51      0x39b ./BSP/bsp_stk_leds.o
@@ -4543,19 +4542,18 @@ OUTPUT(STK3700_freertos_blink_2.axf elf32-littlearm)
  .debug_macro   0x00026408      0x363 ./src/low_power_tick_management.o
  .debug_macro   0x0002676b       0x16 ./src/low_power_tick_management.o
  .debug_macro   0x00026781       0x41 ./src/low_power_tick_management.o
- .debug_macro   0x000267c2      0x4d0 ./src/main.o
- .debug_macro   0x00026c92       0x16 ./src/main.o
- .debug_macro   0x00026ca8       0x97 ./src/main.o
- .debug_macro   0x00026d3f       0xf6 ./src/main.o
- .debug_macro   0x00026e35       0x10 ./src/main.o
- .debug_macro   0x00026e45       0x10 ./src/main.o
- .debug_macro   0x00026e55       0xb6 ./src/main.o
- .debug_macro   0x00026f0b       0x16 ./src/main.o
- .debug_macro   0x00026f21      0x129 ./src/main.o
- .debug_macro   0x0002704a       0x63 ./src/main.o
- .debug_macro   0x000270ad       0x45 ./src/main.o
+ .debug_macro   0x000267c2      0x4c7 ./src/main.o
+ .debug_macro   0x00026c89       0x16 ./src/main.o
+ .debug_macro   0x00026c9f       0x97 ./src/main.o
+ .debug_macro   0x00026d36       0xf6 ./src/main.o
+ .debug_macro   0x00026e2c       0x10 ./src/main.o
+ .debug_macro   0x00026e3c       0x10 ./src/main.o
+ .debug_macro   0x00026e4c       0xb6 ./src/main.o
+ .debug_macro   0x00026f02       0x16 ./src/main.o
+ .debug_macro   0x00026f18      0x129 ./src/main.o
+ .debug_macro   0x00027041       0x63 ./src/main.o
 
-.debug_line     0x00000000     0xc063
+.debug_line     0x00000000     0xc056
  .debug_line    0x00000000      0xb67 ./BSP/bsp_stk_leds.o
  .debug_line    0x00000b67      0x93a ./BSP/bsp_trace.o
  .debug_line    0x000014a1       0x72 ./CMSIS/EFM32GG/startup_gcc_efm32gg.o
@@ -4576,51 +4574,51 @@ OUTPUT(STK3700_freertos_blink_2.axf elf32-littlearm)
  .debug_line    0x00009757      0x8a0 ./emlib/em_rmu.o
  .debug_line    0x00009ff7      0x817 ./emlib/em_system.o
  .debug_line    0x0000a80e      0xb7c ./src/low_power_tick_management.o
- .debug_line    0x0000b38a      0xcd9 ./src/main.o
+ .debug_line    0x0000b38a      0xccc ./src/main.o
 
-.debug_str      0x00000000    0xe2fee
- .debug_str     0x00000000    0xd49ec ./BSP/bsp_stk_leds.o
-                              0xd5026 (size before relaxing)
- .debug_str     0x000d49ec      0x398 ./BSP/bsp_trace.o
-                              0xd50e8 (size before relaxing)
- .debug_str     0x000d4d84       0x36 ./CMSIS/EFM32GG/startup_gcc_efm32gg.o
-                                 0x5f (size before relaxing)
- .debug_str     0x000d4dba      0x26b ./CMSIS/EFM32GG/system_efm32gg.o
-                              0xd2e84 (size before relaxing)
- .debug_str     0x000d5025     0x3a22 ./Drivers/sleep.o
-                              0xd6952 (size before relaxing)
- .debug_str     0x000d8a47     0x3735 ./FreeRTOS/efm32gg/heap_1.o
-                               0xa3ba (size before relaxing)
- .debug_str     0x000dc17c      0x13d ./FreeRTOS/efm32gg/list.o
-                               0x9e26 (size before relaxing)
- .debug_str     0x000dc2b9      0x6ef ./FreeRTOS/efm32gg/port_gcc.o
-                               0x7bcf (size before relaxing)
- .debug_str     0x000dc9a8      0xeeb ./FreeRTOS/efm32gg/queue.o
-                               0xb312 (size before relaxing)
- .debug_str     0x000dd893     0x190e ./FreeRTOS/efm32gg/tasks.o
-                               0xbe43 (size before relaxing)
- .debug_str     0x000df1a1      0x406 ./FreeRTOS/efm32gg/timers.o
-                               0xb80a (size before relaxing)
- .debug_str     0x000df5a7       0x1f ./emlib/em_assert.o
-                               0x2d7b (size before relaxing)
- .debug_str     0x000df5c6      0x389 ./emlib/em_burtc.o
-                              0xd2f7a (size before relaxing)
- .debug_str     0x000df94f      0xe97 ./emlib/em_cmu.o
-                              0xd6cb6 (size before relaxing)
- .debug_str     0x000e07e6      0x5f4 ./emlib/em_core.o
-                              0xd3ad1 (size before relaxing)
- .debug_str     0x000e0dda      0x58b ./emlib/em_emu.o
-                              0xd6dd7 (size before relaxing)
- .debug_str     0x000e1365      0x1fb ./emlib/em_gpio.o
-                              0xd36de (size before relaxing)
- .debug_str     0x000e1560      0x43d ./emlib/em_rmu.o
-                              0xd343f (size before relaxing)
- .debug_str     0x000e199d       0xac ./emlib/em_system.o
-                              0xd2f73 (size before relaxing)
- .debug_str     0x000e1a49       0xd7 ./src/low_power_tick_management.o
-                              0xd8ae0 (size before relaxing)
- .debug_str     0x000e1b20     0x14ce ./src/main.o
-                              0xdc356 (size before relaxing)
+.debug_str      0x00000000    0xe2ee4
+ .debug_str     0x00000000    0xd4a0a ./BSP/bsp_stk_leds.o
+                              0xd5044 (size before relaxing)
+ .debug_str     0x000d4a0a      0x398 ./BSP/bsp_trace.o
+                              0xd5106 (size before relaxing)
+ .debug_str     0x000d4da2       0x36 ./CMSIS/EFM32GG/startup_gcc_efm32gg.o
+                                 0x7d (size before relaxing)
+ .debug_str     0x000d4dd8      0x26b ./CMSIS/EFM32GG/system_efm32gg.o
+                              0xd2ea2 (size before relaxing)
+ .debug_str     0x000d5043     0x3a22 ./Drivers/sleep.o
+                              0xd6970 (size before relaxing)
+ .debug_str     0x000d8a65     0x3735 ./FreeRTOS/efm32gg/heap_1.o
+                               0xa3d8 (size before relaxing)
+ .debug_str     0x000dc19a      0x13d ./FreeRTOS/efm32gg/list.o
+                               0x9e44 (size before relaxing)
+ .debug_str     0x000dc2d7      0x6ef ./FreeRTOS/efm32gg/port_gcc.o
+                               0x7bed (size before relaxing)
+ .debug_str     0x000dc9c6      0xeeb ./FreeRTOS/efm32gg/queue.o
+                               0xb330 (size before relaxing)
+ .debug_str     0x000dd8b1     0x190e ./FreeRTOS/efm32gg/tasks.o
+                               0xbe61 (size before relaxing)
+ .debug_str     0x000df1bf      0x406 ./FreeRTOS/efm32gg/timers.o
+                               0xb828 (size before relaxing)
+ .debug_str     0x000df5c5       0x1f ./emlib/em_assert.o
+                               0x2d99 (size before relaxing)
+ .debug_str     0x000df5e4      0x389 ./emlib/em_burtc.o
+                              0xd2f98 (size before relaxing)
+ .debug_str     0x000df96d      0xe97 ./emlib/em_cmu.o
+                              0xd6cd4 (size before relaxing)
+ .debug_str     0x000e0804      0x5f4 ./emlib/em_core.o
+                              0xd3aef (size before relaxing)
+ .debug_str     0x000e0df8      0x58b ./emlib/em_emu.o
+                              0xd6df5 (size before relaxing)
+ .debug_str     0x000e1383      0x1fb ./emlib/em_gpio.o
+                              0xd36fc (size before relaxing)
+ .debug_str     0x000e157e      0x43d ./emlib/em_rmu.o
+                              0xd345d (size before relaxing)
+ .debug_str     0x000e19bb       0xac ./emlib/em_system.o
+                              0xd2f91 (size before relaxing)
+ .debug_str     0x000e1a67       0xd7 ./src/low_power_tick_management.o
+                              0xd8afe (size before relaxing)
+ .debug_str     0x000e1b3e     0x13a6 ./src/main.o
+                              0xdc24c (size before relaxing)
 
 .debug_frame    0x00000000     0x2b58
  .debug_frame   0x00000000      0x1c4 ./BSP/bsp_stk_leds.o

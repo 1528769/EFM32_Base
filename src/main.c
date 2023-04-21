@@ -62,6 +62,7 @@ static void LedBlink(void *pParameters)
  ******************************************************************************/
 int main(void)
 {
+
   /* Chip errata */
   CHIP_Init();
   /* If first word of user data page is non-zero, enable Energy Profiler trace */
@@ -91,5 +92,6 @@ int main(void)
   /*Start FreeRTOS Scheduler*/
   vTaskStartScheduler();
 
-  return 0;
+  return 0;  **/
+
 }
