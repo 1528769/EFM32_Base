@@ -92,6 +92,6 @@ int main(void)
   /*Start FreeRTOS Scheduler*/
   vTaskStartScheduler();
 
-  return 0;  **/
+  return 0;
 
 }

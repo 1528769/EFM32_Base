@@ -3,10 +3,12 @@
 #include "em_i2c.h"
 #include "em_gpio.h"
 #include "em_cmu.h"
-
+#include "FreeRTOS.h"
+#include "semphr.h"
 static uint8_t device_addr;
 SemaphoreHandle_t xSemaphore;
 
+//adress is 0x77
 void BSP_I2C_Init(uint8_t addr) {
 	xSemaphore = xSemaphoreCreateBinary();
 	I2C_Init_TypeDef i2cInit = I2C_INIT_DEFAULT;
@@ -28,35 +30,41 @@ void BSP_I2C_Init(uint8_t addr) {
  * @return true on success
  */
 bool I2C_WriteRegister(uint8_t reg, uint8_t data) {
-	xSemaphoreTake(xSemaphore);
-	I2C_TransferReturn_TypeDef I2C_Status;
-	bool ret_value = false;
+	if(xSemaphore!=NULL)
+	{
+		if(xSemaphoreTake(xSemaphore,  ( TickType_t ) 10)== pdTRUE)
+		{
+			I2C_TransferReturn_TypeDef I2C_Status;
+			bool ret_value = false;
 
-	I2C_TransferSeq_TypeDef seq;
-	uint8_t dataW[2];
+			I2C_TransferSeq_TypeDef seq;
+			uint8_t dataW[2];
 
-	seq.addr = device_addr;
-	seq.flags = I2C_FLAG_WRITE;
+			seq.addr = device_addr;
+			seq.flags = I2C_FLAG_WRITE;
 
-	/* Register to write: 0x67 ( INT_FLAT )*/
-	dataW[0] = reg;
-	dataW[1] = data;
+			/* Register to write: 0x67 ( INT_FLAT )*/
+			dataW[0] = reg;
+			dataW[1] = data;
 
-	seq.buf[0].data = dataW;
-	seq.buf[0].len = 2;
-	I2C_Status = I2C_TransferInit(I2C1, &seq);
+			seq.buf[0].data = dataW;
+			seq.buf[0].len = 2;
+			I2C_Status = I2C_TransferInit(I2C1, &seq);
 
-	while (I2C_Status == i2cTransferInProgress) {
-		I2C_Status = I2C_Transfer(I2C1);
+			while (I2C_Status == i2cTransferInProgress) {
+				I2C_Status = I2C_Transfer(I2C1);
+			}
+
+			if (I2C_Status != i2cTransferDone) {
+				ret_value = false;
+			} else {
+				ret_value = true;
+			}
+			return ret_value;
+			xSemaphoreGive(xSemaphore);
+		}
+		else{};
 	}
-
-	if (I2C_Status != i2cTransferDone) {
-		ret_value = false;
-	} else {
-		ret_value = true;
-	}
-	return ret_value;
-	xSemaphoreGive(xSemaphore);
 }
 
 /**
@@ -66,33 +74,41 @@ bool I2C_WriteRegister(uint8_t reg, uint8_t data) {
  * @return true on success
  */
 bool I2C_ReadRegister(uint8_t reg, uint8_t *val) {
-	xSemaphoreTake(xSemaphore);
-	I2C_TransferReturn_TypeDef I2C_Status;
-	I2C_TransferSeq_TypeDef seq;
-	uint8_t data[2];
+	if(xSemaphore!=NULL)
+		{
+			if(xSemaphoreTake(xSemaphore,  ( TickType_t ) 10)== pdTRUE)
+			{
+				I2C_TransferReturn_TypeDef I2C_Status;
+				I2C_TransferSeq_TypeDef seq;
+				uint8_t data[2];
 
-	seq.addr = device_addr;
-	seq.flags = I2C_FLAG_WRITE_READ;
+				seq.addr = device_addr;
+				seq.flags = I2C_FLAG_WRITE_READ;
 
-	seq.buf[0].data = &reg;
-	seq.buf[0].len = 1;
-	seq.buf[1].data = data;
-	seq.buf[1].len = 1;
+				seq.buf[0].data = &reg;
+				seq.buf[0].len = 1;
+				seq.buf[1].data = data;
+				seq.buf[1].len = 1;
 
-	I2C_Status = I2C_TransferInit(I2C1, &seq);
+				I2C_Status = I2C_TransferInit(I2C1, &seq);
 
-	while (I2C_Status == i2cTransferInProgress) {
-		I2C_Status = I2C_Transfer(I2C1);
-	}
+				while (I2C_Status == i2cTransferInProgress) {
+					I2C_Status = I2C_Transfer(I2C1);
+				}
 
-	if (I2C_Status != i2cTransferDone) {
-		return false;
-	}
+				if (I2C_Status != i2cTransferDone) {
+					return false;
+				}
 
-	*val = data[0];
+				*val = data[0];
 
-	return true;
-	xSemaphoreGive(xSemaphore);
+				return true;
+				xSemaphoreGive(xSemaphore);
+			}
+			else{};
+		}
+
+
 }
 
 bool I2C_Test() {
