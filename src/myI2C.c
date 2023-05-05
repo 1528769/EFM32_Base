@@ -22,7 +22,7 @@ void BSP_I2C_Init(uint8_t addr) {
 	device_addr = addr;
 
 }
-
+//F
 /**
  * @brief Write register using default I2C bus
  * @param reg register to write
