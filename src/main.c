@@ -65,32 +65,40 @@ int main(void)
 
   /* Chip errata */
   CHIP_Init();
-  /* If first word of user data page is non-zero, enable Energy Profiler trace */
-  BSP_TraceProfilerSetup();
+  BSP_I2C_Init(0x076);
+  uint8_t osrs_h = 0x001; //humitat 0xF2
+  //osrs_p[2:0] pressio IIR filter
+  //osrs_t[2:0]  temperatura IIR filter
 
-  /* Initialize LED driver */
+  I2C_WriteRegister(0xA0, 0xF4);
+  I2C_ReadRegister(0x0F6, osrs_h);
+  I2C_Test();
+  /* If first word of user data page is non-zero, enable Energy Profiler trace */
+  /*BSP_TraceProfilerSetup();
+
+   Initialize LED driver
   BSP_LedsInit();
-  /* Setting state of leds*/
+   Setting state of leds
   BSP_LedSet(0);
   BSP_LedSet(1);
 
-  /* Initialize SLEEP driver, no calbacks are used */
+   Initialize SLEEP driver, no calbacks are used
   SLEEP_Init(NULL, NULL);
 #if (configSLEEP_MODE < 3)
-  /* do not let to sleep deeper than define */
+   do not let to sleep deeper than define
   SLEEP_SleepBlockBegin((SLEEP_EnergyMode_t)(configSLEEP_MODE + 1));
 #endif
 
-  /* Parameters value for taks*/
+   Parameters value for taks
   static TaskParams_t parametersToTask1 = { pdMS_TO_TICKS(1000), 0 };
   static TaskParams_t parametersToTask2 = { pdMS_TO_TICKS(500), 1 };
 
-  /*Create two task for blinking leds*/
+  Create two task for blinking leds
   xTaskCreate(LedBlink, (const char *) "LedBlink1", STACK_SIZE_FOR_TASK, &parametersToTask1, TASK_PRIORITY, NULL);
   xTaskCreate(LedBlink, (const char *) "LedBlink2", STACK_SIZE_FOR_TASK, &parametersToTask2, TASK_PRIORITY, NULL);
 
-  /*Start FreeRTOS Scheduler*/
-  vTaskStartScheduler();
+  Start FreeRTOS Scheduler
+  vTaskStartScheduler();*/
 
   return 0;
 
