@@ -32,7 +32,7 @@ void BSP_I2C_Init(uint8_t addr) {
 bool I2C_WriteRegister(uint8_t reg, uint8_t data) {
 	if(xSemaphore!=NULL)
 	{
-		if(xSemaphoreTake(xSemaphore,  ( TickType_t ) 0)== pdFALSE)
+		if(xSemaphoreTake(xSemaphore,  ( TickType_t ) 0)== pdTRUE)
 		{
 			I2C_TransferReturn_TypeDef I2C_Status;
 			bool ret_value = false;
@@ -76,7 +76,7 @@ bool I2C_WriteRegister(uint8_t reg, uint8_t data) {
 bool I2C_ReadRegister(uint8_t reg, uint8_t *val) {
 	if(xSemaphore!=NULL)
 		{
-			if(xSemaphoreTake(xSemaphore,  ( TickType_t ) 0)== pdFALSE)
+			if(xSemaphoreTake(xSemaphore,  ( TickType_t ) 0)== pdTRUE)
 			{
 				I2C_TransferReturn_TypeDef I2C_Status;
 				I2C_TransferSeq_TypeDef seq;

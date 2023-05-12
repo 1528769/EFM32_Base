@@ -34,6 +34,10 @@
 #define STACK_SIZE_FOR_TASK    (configMINIMAL_STACK_SIZE + 10)
 #define TASK_PRIORITY          (tskIDLE_PRIORITY + 1)
 
+void BSP_I2C_Init(uint8_t addr);
+bool I2C_ReadRegister(uint8_t reg, uint8_t *val);
+bool I2C_Test();
+
 /* Structure with parameters for LedBlink */
 typedef struct {
   /* Delay between blink of led */
@@ -46,6 +50,8 @@ typedef struct {
  * @brief Simple task which is blinking led
  * @param *pParameters pointer to parameters passed to the function
  ******************************************************************************/
+
+
 static void LedBlink(void *pParameters)
 {
   TaskParams_t     * pData = (TaskParams_t*) pParameters;
@@ -57,6 +63,42 @@ static void LedBlink(void *pParameters)
   }
 }
 
+static void vATaskRead( void *pParameters ) //generar dades del sensor
+{
+        // user initialization
+	pParameters = 0x3FE7;
+	TaskParams_t     * pData = (TaskParams_t*) pParameters;
+
+}
+
+static void vATaskProcess( void *pvParameters ) //crear cua, procesar dades
+{
+    // user initialization
+    while(1)
+    {
+        -- Task application code here. --
+    }
+}
+
+static void vATaskPrint( void *pvParameters ) //printar dades
+    {
+        // user initialization
+        while(1)
+        {
+            -- Task application code here. --
+        }
+    }
+xQueue = xQueueCreate( 1, sizeof( uint16_t));
+if(xQueue != NULL)
+{
+	xTaskCreate( vaTaskRead, ( signed char * ) "Rx", configMINIMAL_STACK_SIZE, NULL, 1, NULL );
+	xTaskCreate( prvQueueSendTask, ( signed char * ) "TX", configMINIMAL_STACK_SIZE, NULL, mainQUEUE_SEND_TASK_PRIORITY, NULL );
+	vTaskStartScheduler();
+}
+
+
+
+
 /***************************************************************************//**
  * @brief  Main function
  ******************************************************************************/
@@ -65,13 +107,14 @@ int main(void)
 
   /* Chip errata */
   CHIP_Init();
-  BSP_I2C_Init(0x076);
-  uint8_t osrs_h = 0x001; //humitat 0xF2
-  //osrs_p[2:0] pressio IIR filter
-  //osrs_t[2:0]  temperatura IIR filter
+  BSP_I2C_Init(0x77);
+  uint8_t data = 0;
 
-  I2C_WriteRegister(0xA0, 0xF4);
-  I2C_ReadRegister(0x0F6, osrs_h);
+  //I2C_WriteRegister(0xD0, data);
+  I2C_ReadRegister(0xD0, &data);
+  if(data == 0x60) {
+	  printf("Be");
+  }
   I2C_Test();
   /* If first word of user data page is non-zero, enable Energy Profiler trace */
   /*BSP_TraceProfilerSetup();
