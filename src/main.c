@@ -51,6 +51,15 @@ typedef struct {
  * @param *pParameters pointer to parameters passed to the function
  ******************************************************************************/
 
+typedef struct {
+	uint32_t temp;
+	uint16_t dig_T1;
+	uint16_t dig_T2;
+	uint16_t dig_T3;
+}Temperatura;
+
+QueueHandle_t rData;
+QueueHandle_t rTemp;
 
 static void LedBlink(void *pParameters)
 {
@@ -65,12 +74,88 @@ static void LedBlink(void *pParameters)
 
 static void vATaskRead( void *pParameters ) //generar dades del sensor
 {
-        // user initialization
-	pParameters = 0x3FE7;
-	TaskParams_t     * pData = (TaskParams_t*) pParameters;
+	//Assignem data i registre de la humitat
+	uint8_t ctrl_hum = 0x1;
+	uint8_t regH = 0xF2;
+	I2C_WriteRegister(regH, ctrl_hum);
+
+	//Assignem data i registre de la humitat
+	uint8_t ctrl_meas = 0x47; //donar un valor incial a la temperatura
+	uint8_t regT = 0xF4;
+	while(1){
+		if(I2C_WriteRegister(regT, ctrl_meas))
+		{
+			//comprovar contingut registres
+			uint8_t data;
+			I2C_ReadRegister(regH, &data);
+
+			I2C_ReadRegister(regT, &data);
+
+			uint8_t temp_msb;
+			uint8_t reg = 0xFA;
+
+			I2C_ReadRegister(reg, &temp_msb);
+
+			uint8_t temp_lsb;
+			reg = 0xFB;
+
+			I2C_ReadRegister(reg, &temp_lsb);
+
+
+			uint8_t temp_xlsb;
+			reg = 0xFC;
+
+			I2C_ReadRegister(reg, &temp_xlsb);
+
+			uint32_t temp=0;
+			temp |= temp_msb << 12;
+			temp |= temp_msb << 4;
+			temp |= temp_msb << 0;
+
+			uint16_t dig_T1;
+			uint16_t dig_T2;
+			uint16_t dig_T3;
+
+			//Trimming parameter readout
+			reg = 0x89;
+			I2C_ReadRegister(reg, &data);
+			dig_T1 |= data << 8;
+			reg = 0x88;
+			I2C_ReadRegister(reg, &data);
+			dig_T1 |= data << 0;
+
+			reg = 0x8B;
+			I2C_ReadRegister(reg, &data);
+			dig_T2 |= data << 8;
+			reg = 0x8A;
+			I2C_ReadRegister(reg, &data);
+			dig_T2 |= data << 0;
+
+			reg = 0x8D;
+			I2C_ReadRegister(reg, &data);
+			dig_T3 |= data << 8;
+			reg = 0x8C;
+			I2C_ReadRegister(reg, &data);
+			dig_T3 |= data << 0;
+
+
+			//CREEM MISSATGE
+			Temperatura x;
+			x.temp = temp;
+			x.dig_T1 = dig_T1;
+			x.dig_T2 = dig_T2;
+			x.dig_T3 = dig_T3;
+
+			xQueueSend(rData, &x, 0);
+		}
+
+
+	}
+
+
 
 }
-
+//Compensation formulasin double precision floating point
 static void vATaskProcess( void *pvParameters ) //crear cua, procesar dades
 {
     // user initialization
