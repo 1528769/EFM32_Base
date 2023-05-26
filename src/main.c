@@ -30,6 +30,7 @@
 #include "bsp_trace.h"
 
 #include "sleep.h"
+//#include "bsp_print.c"
 
 #define STACK_SIZE_FOR_TASK    (configMINIMAL_STACK_SIZE + 10)
 #define TASK_PRIORITY          (tskIDLE_PRIORITY + 1)
@@ -158,28 +159,65 @@ static void vATaskRead( void *pParameters ) //generar dades del sensor
 //Compensation formulasin double precision floating point
 static void vATaskProcess( void *pvParameters ) //crear cua, procesar dades
 {
-    // user initialization
+	Temperatura xTemp;
+	double var1, var2, temp;
+	double tempMin = -10;
+	double tempMax = 70;
+
+	// user initialization
     while(1)
     {
-        -- Task application code here. --
+    	if(xQueueReceive(rData, &xTemp, 0))
+    	{
+    		var1  = (((double)xTemp.temp)/16384.0 - ((double)xTemp.dig_T1)/1024.0) * ((double)xTemp.dig_T2);
+    		var2  = ((((double)xTemp.temp)/131072.0) - ((double)xTemp.dig_T1)/8192.0) *(((double)xTemp.temp)/131072.0 -((double)xTemp.dig_T1)/8192.0)*((double)xTemp.dig_T3);
+    		//t_fine = (BME280_S32_t)(var1 + var2);
+    		temp  = (var1 + var2) / 5120.0;
+    		if(temp < tempMin)
+    		{
+    			temp = tempMin;
+    		}
+    		if(temp > tempMax)
+    		{
+    		    temp = tempMax;
+    		}
+    		int itemp = (int)temp;
+    		xQueueSend(rTemp, &itemp, 0);
+
+    	}
+
     }
 }
 
 static void vATaskPrint( void *pvParameters ) //printar dades
-    {
+{
+	int temp;
+	while(1){
+		if(xQueueReceive(rTemp, &temp, 0))
+		{
+			if(temp<40)
+			{
+				BSP_LedClear(1);
+				BSP_LedSet(0);
+			}
+			else{
+				BSP_LedClear(0);
+				BSP_LedSet(1);
+			}
+			printf("Temperatura: %d C\n", temp);
+		}
+	}
         // user initialization
-        while(1)
-        {
-            -- Task application code here. --
-        }
-    }
-xQueue = xQueueCreate( 1, sizeof( uint16_t));
+
+
+}
+/*xQueue = xQueueCreate( 1, sizeof( uint16_t));
 if(xQueue != NULL)
 {
 	xTaskCreate( vaTaskRead, ( signed char * ) "Rx", configMINIMAL_STACK_SIZE, NULL, 1, NULL );
 	xTaskCreate( prvQueueSendTask, ( signed char * ) "TX", configMINIMAL_STACK_SIZE, NULL, mainQUEUE_SEND_TASK_PRIORITY, NULL );
 	vTaskStartScheduler();
-}
+}*/
 
 
 
@@ -187,20 +225,43 @@ if(xQueue != NULL)
 /***************************************************************************//**
  * @brief  Main function
  ******************************************************************************/
+
+//void setupSWOForPrint(void);
+
+void SWO_SetupForPrint(void);
 int main(void)
 {
 
   /* Chip errata */
   CHIP_Init();
-  BSP_I2C_Init(0x77);
+  BSP_LedsInit();
+  SWO_SetupForPrint();
+  BSP_I2C_Init(0x77 << 1);
+
+
   uint8_t data = 0;
 
   //I2C_WriteRegister(0xD0, data);
-  I2C_ReadRegister(0xD0, &data);
-  if(data == 0x60) {
-	  printf("Be");
-  }
+  //I2C_ReadRegister(0xD0, &data);
   I2C_Test();
+  SLEEP_Init(NULL, NULL);
+#if (configSLEEP_MODE < 3)
+   do not let to sleep deeper than define
+  SLEEP_SleepBlockBegin((SLEEP_EnergyMode_t)(configSLEEP_MODE + 1));
+#endif
+
+  rData = xQueueCreate(1, sizeof(Temperatura));
+  rTemp = xQueueCreate(1, sizeof(double));
+  xTaskCreate(vATaskRead, (signed char *) "vATaskRead", STACK_SIZE_FOR_TASK,(void *) 1, TASK_PRIORITY, NULL ) ;
+  xTaskCreate(vATaskProcess, (signed char *) "vATaskProcess", STACK_SIZE_FOR_TASK,(void *) 1, TASK_PRIORITY, NULL ) ;
+  xTaskCreate(vATaskPrint, (signed char *) "vATaskPrint", STACK_SIZE_FOR_TASK,(void *) 1, TASK_PRIORITY, NULL ) ;
+  /*xQueue = xQueueCreate( 1, sizeof( uint16_t));
+  if(xQueue != NULL)
+  {
+  	xTaskCreate( vaTaskRead, ( signed char * ) "Rx", configMINIMAL_STACK_SIZE, NULL, 1, NULL );
+  	xTaskCreate( prvQueueSendTask, ( signed char * ) "TX", configMINIMAL_STACK_SIZE, NULL, mainQUEUE_SEND_TASK_PRIORITY, NULL );
+  	vTaskStartScheduler();
+  }*/
   /* If first word of user data page is non-zero, enable Energy Profiler trace */
   /*BSP_TraceProfilerSetup();
 
@@ -227,7 +288,7 @@ int main(void)
 
   Start FreeRTOS Scheduler
   vTaskStartScheduler();*/
-
+  vTaskStartScheduler();
   return 0;
 
 }
