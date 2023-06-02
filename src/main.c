@@ -48,10 +48,8 @@ typedef struct {
   int          ledNo;
 } TaskParams_t;
 
-/***************************************************************************//**
- * @brief Simple task which is blinking led
- * @param *pParameters pointer to parameters passed to the function
- ******************************************************************************/
+
+//versió final
 
 typedef struct {	//creem una estructura per obtenir els tres digits necessaris per la compensation formula per calcular la temperatura
 	uint32_t temp;
@@ -63,6 +61,10 @@ typedef struct {	//creem una estructura per obtenir els tres digits necessaris p
 QueueHandle_t rData; //creem una variable que llegirà el valor de temperatura del sensor i serà enviat per les cues
 QueueHandle_t rTemp; //aquesta variable obté el valor de temperatura de rData(fa el càlcul).
 
+/***************************************************************************//**
+ * @brief Simple task which is blinking led
+ * @param *pParameters pointer to parameters passed to the function
+ ******************************************************************************/
 static void LedBlink(void *pParameters)
 {
   TaskParams_t     * pData = (TaskParams_t*) pParameters;
