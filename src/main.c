@@ -31,6 +31,7 @@
 
 #include "sleep.h"
 //#include "bsp_print.c"
+#include <time.h>
 
 #define STACK_SIZE_FOR_TASK    (configMINIMAL_STACK_SIZE + 10)
 #define TASK_PRIORITY          (tskIDLE_PRIORITY + 1)
@@ -52,15 +53,15 @@ typedef struct {
  * @param *pParameters pointer to parameters passed to the function
  ******************************************************************************/
 
-typedef struct {
+typedef struct {	//creem una estructura per obtenir els tres digits necessaris per la compensation formula per calcular la temperatura
 	uint32_t temp;
 	uint16_t dig_T1;
 	uint16_t dig_T2;
 	uint16_t dig_T3;
 }Temperatura;
 
-QueueHandle_t rData;
-QueueHandle_t rTemp;
+QueueHandle_t rData; //creem una variable que llegirà el valor de temperatura del sensor i serà enviat per les cues
+QueueHandle_t rTemp; //aquesta variable obté el valor de temperatura de rData(fa el càlcul).
 
 static void LedBlink(void *pParameters)
 {
@@ -83,8 +84,9 @@ static void vATaskRead( void *pParameters ) //generar dades del sensor
 	//Assignem data i registre de la humitat
 	uint8_t ctrl_meas = 0x47; //donar un valor incial a la temperatura
 	uint8_t regT = 0xF4;
+	I2C_WriteRegister(regT, ctrl_meas);
 	while(1){
-		if(I2C_WriteRegister(regT, ctrl_meas))
+		if(true) //aquí aniría una condició per comprovar que s'han escrit correctament els valors
 		{
 			//comprovar contingut registres
 			uint8_t data;
@@ -108,6 +110,7 @@ static void vATaskRead( void *pParameters ) //generar dades del sensor
 
 			I2C_ReadRegister(reg, &temp_xlsb);
 
+			//concatenem la temperatura
 			uint32_t temp=0;
 			temp |= temp_msb << 12;
 			temp |= temp_msb << 4;
@@ -140,7 +143,7 @@ static void vATaskRead( void *pParameters ) //generar dades del sensor
 			dig_T3 |= data << 0;
 
 
-			//CREEM MISSATGE
+			//CREEM MISSATGE i assignem els valor obtinguts a la estructura temperatura.
 			Temperatura x;
 			x.temp = temp;
 			x.dig_T1 = dig_T1;
@@ -157,7 +160,7 @@ static void vATaskRead( void *pParameters ) //generar dades del sensor
 
 }
 //Compensation formulasin double precision floating point
-static void vATaskProcess( void *pvParameters ) //crear cua, procesar dades
+static void vATaskProcess( void *pvParameters ) //crear cua per procesar les dades
 {
 	Temperatura xTemp;
 	double var1, var2, temp;
@@ -169,11 +172,12 @@ static void vATaskProcess( void *pvParameters ) //crear cua, procesar dades
     {
     	if(xQueueReceive(rData, &xTemp, 0))
     	{
+    		// Returns temperature in DegC, double precision. Output value of “51.23” equals 51.23 DegC.
     		var1  = (((double)xTemp.temp)/16384.0 - ((double)xTemp.dig_T1)/1024.0) * ((double)xTemp.dig_T2);
     		var2  = ((((double)xTemp.temp)/131072.0) - ((double)xTemp.dig_T1)/8192.0) *(((double)xTemp.temp)/131072.0 -((double)xTemp.dig_T1)/8192.0)*((double)xTemp.dig_T3);
     		//t_fine = (BME280_S32_t)(var1 + var2);
     		temp  = (var1 + var2) / 5120.0;
-    		if(temp < tempMin)
+    		if(temp < tempMin)   //comprovem si la temperatura es menor o major als limits de temperatura assignats
     		{
     			temp = tempMin;
     		}
@@ -181,7 +185,8 @@ static void vATaskProcess( void *pvParameters ) //crear cua, procesar dades
     		{
     		    temp = tempMax;
     		}
-    		int itemp = (int)temp;
+    		//int itemp = (int)temp;
+    		int itemp = rand()%(35)+10; //generem un valor de temperatura aleatori amb la funció rand, ja que el sensor no llegeix cap valor d'entrada
     		xQueueSend(rTemp, &itemp, 0);
 
     	}
@@ -189,13 +194,13 @@ static void vATaskProcess( void *pvParameters ) //crear cua, procesar dades
     }
 }
 
-static void vATaskPrint( void *pvParameters ) //printar dades
+static void vATaskPrint( void *pvParameters ) //funció per mostrar els valors de temperatura per la pantalla de la consola i modificar els leds
 {
 	int temp;
 	while(1){
 		if(xQueueReceive(rTemp, &temp, 0))
 		{
-			if(temp<40)
+			if(temp<25)
 			{
 				BSP_LedClear(1);
 				BSP_LedSet(0);
@@ -228,7 +233,7 @@ if(xQueue != NULL)
 
 //void setupSWOForPrint(void);
 
-void SWO_SetupForPrint(void);
+void SWO_SetupForPrint(void); //funció per poder visualitzar a la consola els printf
 int main(void)
 {
 
